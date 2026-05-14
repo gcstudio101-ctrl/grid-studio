@@ -25,15 +25,39 @@ body { font-family: 'Jost', system-ui, -apple-system, sans-serif; background: va
 @font-face { font-family: 'Jost'; font-display: swap; }
 @font-face { font-family: 'Cormorant Garamond'; font-display: swap; }
 
-/* NAV */
-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 4rem; background: rgba(14,12,10,0.92); backdrop-filter: blur(12px); border-bottom: 0.5px solid rgba(201,168,76,0.15); }
-.nav-logo { display: flex; align-items: center; text-decoration: none; }
+/* NAV - Liquid Glass */
+nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 200;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.5rem 4rem;
+  background: rgba(14, 12, 10, 0.35);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border-bottom: 0.5px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.05) inset, 0 4px 24px rgba(0,0,0,0.3);
+}
+nav::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%);
+  pointer-events: none;
+}
+.nav-logo { display: flex; align-items: center; text-decoration: none; position: relative; z-index: 1; }
 .nav-logo img { height: var(--nav-logo-h); width: auto; display: block; }
-.nav-links { display: flex; gap: 2.5rem; list-style: none; }
-.nav-links a { font-size: var(--nav-link-size); letter-spacing: 0.18em; text-transform: uppercase; color: var(--stone); text-decoration: none; transition: color 0.2s; }
-.nav-links a:hover { color: var(--ink); }
-.nav-cta { font-size: 0.75rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); text-decoration: none; border: 0.5px solid var(--gold); padding: 0.55rem 1.4rem; transition: all 0.25s; }
-.nav-cta:hover { background: var(--gold); color: #0E0C0A; }
+.nav-links { display: flex; gap: 2.5rem; list-style: none; position: relative; z-index: 1; }
+.nav-links a { font-size: var(--nav-link-size); letter-spacing: 0.18em; text-transform: uppercase; color: rgba(200,190,175,0.85); text-decoration: none; transition: color 0.2s; }
+.nav-links a:hover { color: #F0EBE0; }
+.nav-cta {
+  font-size: 0.75rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--gold); text-decoration: none;
+  border: 0.5px solid rgba(201,168,76,0.5);
+  padding: 0.55rem 1.4rem;
+  background: rgba(201,168,76,0.06);
+  transition: all 0.25s;
+  position: relative; z-index: 1;
+}
+.nav-cta:hover { background: var(--gold); color: #0E0C0A; border-color: var(--gold); }
 
 /* HERO */
 #hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; padding-top: 80px; }
@@ -2169,21 +2193,25 @@ document.addEventListener('DOMContentLoaded', async () => {
 <div id="contact-popup" style="
   position: fixed; inset: 0; z-index: 10000;
   display: flex; align-items: center; justify-content: center;
-  background: rgba(7,6,5,0.75); backdrop-filter: blur(6px);
+  background: rgba(7,6,5,0.6); backdrop-filter: blur(12px);
   opacity: 0; transition: opacity 0.5s ease;
   pointer-events: none;
 ">
   <div id="contact-popup-box" style="
-    background: #141210;
-    border: 0.5px solid rgba(201,168,76,0.25);
-    border-left: 2px solid #C9A84C;
+    background: rgba(20,18,16,0.45);
+    backdrop-filter: blur(28px) saturate(180%);
+    -webkit-backdrop-filter: blur(28px) saturate(180%);
+    border: 0.5px solid rgba(255,255,255,0.1);
+    border-top: 0.5px solid rgba(255,255,255,0.18);
+    border-left: 2px solid rgba(201,168,76,0.6);
     padding: 3rem 3.5rem;
     max-width: 480px; width: 90%;
     position: relative;
     transform: translateY(24px);
     transition: transform 0.5s cubic-bezier(0.16,1,0.3,1);
-    box-shadow: 0 24px 80px rgba(0,0,0,0.7);
+    box-shadow: 0 24px 80px rgba(0,0,0,0.5), 0 1px 0 rgba(255,255,255,0.06) inset;
   ">
+  <div style="position:absolute;inset:0;border-radius:inherit;background:linear-gradient(135deg,rgba(255,255,255,0.05) 0%,rgba(255,255,255,0.01) 50%,rgba(201,168,76,0.03) 100%);pointer-events:none;"></div>
     <!-- Close button -->
     <button onclick="closePopup()" style="
       position: absolute; top: 1.2rem; right: 1.4rem;
