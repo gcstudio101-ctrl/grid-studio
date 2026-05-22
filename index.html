@@ -206,6 +206,317 @@ nav::before {
 .cta-phone { font-size: 0.82rem; color: var(--taupe); }
 .cta-phone a { color: var(--stone); text-decoration: none; }
 
+/* ═══════════════════════════════════════
+   INSTAGRAM SHOWCASE
+═══════════════════════════════════════ */
+#instagram-showcase {
+  padding: 7rem 4rem;
+  background: #070605;
+  position: relative;
+  overflow: hidden;
+}
+.ig-glow {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.ig-glow-a {
+  top: 8%; right: 4%;
+  width: 420px; height: 420px;
+  background: radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 70%);
+  animation: igFloatA 9s ease-in-out infinite;
+}
+.ig-glow-b {
+  bottom: 12%; left: 3%;
+  width: 300px; height: 300px;
+  background: radial-gradient(circle, rgba(201,168,76,0.04) 0%, transparent 70%);
+  animation: igFloatB 12s ease-in-out infinite;
+}
+@keyframes igFloatA { 0%,100%{transform:translate(0,0)} 50%{transform:translate(-16px,22px)} }
+@keyframes igFloatB { 0%,100%{transform:translate(0,0)} 50%{transform:translate(20px,-16px)} }
+@keyframes igShimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+@keyframes igFadeIn  { from{opacity:0} to{opacity:1} }
+@keyframes igSlideUp { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
+
+.ig-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Header */
+.ig-header { margin-bottom: 3.5rem; }
+.ig-eyebrow {
+  font-size: 0.68rem; letter-spacing: 0.3em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 0.75rem; display: block;
+}
+.ig-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: var(--section-title-size);
+  font-weight: 300; color: var(--ink);
+  line-height: 1.1; letter-spacing: -0.01em;
+}
+.ig-title em { color: var(--gold); font-style: italic; }
+
+/* Profile Row */
+.ig-profile {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 3rem;
+  padding-bottom: 2.5rem;
+  border-bottom: 0.5px solid rgba(201,168,76,0.1);
+}
+.ig-avatar-wrap { position: relative; flex-shrink: 0; }
+.ig-avatar {
+  width: 82px; height: 82px; border-radius: 50%;
+  background: rgba(201,168,76,0.1);
+  border: 1px solid rgba(201,168,76,0.28);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 24px; color: var(--gold); letter-spacing: 0.04em;
+  overflow: hidden;
+}
+.ig-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.ig-badge {
+  position: absolute; bottom: 0; right: 0;
+  background: var(--gold); border-radius: 50%;
+  width: 22px; height: 22px;
+  display: flex; align-items: center; justify-content: center;
+  border: 2px solid #070605;
+}
+.ig-name-row {
+  display: flex; align-items: baseline;
+  gap: 10px; flex-wrap: wrap; margin-bottom: 5px;
+}
+.ig-full-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.7rem; font-weight: 300; color: var(--ink);
+}
+.ig-handle {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.72rem; letter-spacing: 0.16em; color: var(--gold);
+}
+.ig-bio {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.82rem; line-height: 1.75;
+  color: var(--stone); max-width: 320px;
+  white-space: pre-line;
+}
+.ig-stats-panel {
+  display: flex; gap: 2.5rem;
+  padding: 1.2rem 2.2rem;
+  border: 0.5px solid rgba(201,168,76,0.12);
+  background: rgba(255,255,255,0.02);
+  flex-shrink: 0;
+}
+.ig-stat { text-align: center; }
+.ig-stat-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem; font-weight: 300; color: var(--ink); line-height: 1;
+}
+.ig-stat-label {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.6rem; letter-spacing: 0.22em;
+  text-transform: uppercase; color: #6B6358; margin-top: 4px;
+}
+.ig-stat-divider { width: 0.5px; background: rgba(201,168,76,0.12); }
+.ig-follow-btn {
+  display: inline-flex; align-items: center; gap: 9px;
+  font-family: 'Jost', sans-serif; font-size: 0.7rem;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: #070605; text-decoration: none;
+  background: var(--gold); padding: 0.85rem 2rem;
+  border: none; cursor: pointer;
+  transition: background 0.2s; flex-shrink: 0;
+}
+.ig-follow-btn:hover { background: var(--gold-light); }
+
+/* Post Grid */
+.ig-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin-bottom: 3.5rem;
+}
+.ig-post {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+  cursor: pointer;
+  opacity: 0;
+  transform: scale(0.96) translateY(18px);
+  transition: opacity 0.65s cubic-bezier(.16,1,.3,1), transform 0.65s cubic-bezier(.16,1,.3,1);
+}
+.ig-post.ig-visible { opacity: 1; transform: scale(1) translateY(0); }
+.ig-post-bg {
+  width: 100%; height: 100%;
+  transition: transform 0.55s cubic-bezier(.16,1,.3,1);
+  display: flex; align-items: center; justify-content: center;
+}
+.ig-post:hover .ig-post-bg { transform: scale(1.07); }
+.ig-post img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.ig-overlay {
+  position: absolute; inset: 0;
+  background: rgba(7,6,5,0.7);
+  opacity: 0; transition: opacity 0.3s;
+  display: flex; align-items: center; justify-content: center;
+  gap: 26px; z-index: 2;
+}
+.ig-post:hover .ig-overlay { opacity: 1; }
+.ig-overlay-stat {
+  display: flex; align-items: center; gap: 6px;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.85rem; font-weight: 500; color: #fff;
+}
+.ig-post-bar {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 2px; background: rgba(201,168,76,0.6);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 0.4s cubic-bezier(.16,1,.3,1);
+  z-index: 3;
+}
+.ig-post:hover .ig-post-bar { transform: scaleX(1); }
+.ig-skel {
+  background: linear-gradient(90deg,#1a1612 0%,#2a2218 50%,#1a1612 100%);
+  background-size: 200% 100%;
+  animation: igShimmer 1.6s infinite;
+  position: absolute; inset: 0;
+}
+
+/* Footer CTA */
+.ig-cta {
+  text-align: center;
+  display: flex; flex-direction: column;
+  align-items: center; gap: 1rem;
+}
+.ig-cta-label {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem; font-style: italic;
+  font-weight: 300; color: #3A3430;
+}
+.ig-outline-btn {
+  display: inline-flex; align-items: center; gap: 9px;
+  font-family: 'Jost', sans-serif; font-size: 0.7rem;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--gold); text-decoration: none;
+  border: 0.5px solid rgba(201,168,76,0.35);
+  padding: 0.85rem 2.5rem;
+  transition: all 0.2s;
+}
+.ig-outline-btn:hover {
+  background: var(--gold); color: #070605;
+  border-color: var(--gold);
+}
+
+/* Lightbox */
+#ig-lightbox {
+  position: fixed; inset: 0; z-index: 99999;
+  background: rgba(4,3,2,0.92);
+  backdrop-filter: blur(14px);
+  display: none; align-items: center; justify-content: center;
+  padding: 2rem;
+  animation: igFadeIn 0.2s ease;
+}
+#ig-lightbox.ig-open { display: flex; }
+.ig-modal {
+  display: flex; max-width: 860px; width: 100%;
+  background: #0E0C0A;
+  border: 0.5px solid rgba(201,168,76,0.15);
+  max-height: 88vh; overflow: hidden;
+  animation: igSlideUp 0.32s cubic-bezier(.16,1,.3,1);
+}
+.ig-modal-img {
+  flex: 0 0 52%; position: relative;
+  overflow: hidden; background: #1A1612;
+  min-height: 300px;
+}
+.ig-modal-info {
+  flex: 1; padding: 2rem;
+  display: flex; flex-direction: column;
+  gap: 1.1rem; overflow-y: auto;
+}
+.ig-modal-user {
+  display: flex; align-items: center; gap: 10px;
+}
+.ig-modal-avatar {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: rgba(201,168,76,0.12);
+  border: 1px solid rgba(201,168,76,0.25);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 10px; color: var(--gold);
+}
+.ig-modal-uname {
+  font-family: 'Jost', sans-serif; font-size: 0.8rem;
+  font-weight: 600; color: var(--ink); letter-spacing: 0.06em;
+}
+.ig-modal-date {
+  font-family: 'Jost', sans-serif; font-size: 0.65rem; color: #6B6358;
+}
+.ig-modal-close {
+  margin-left: auto; background: none; border: none;
+  cursor: pointer; color: #6B6358; font-size: 1.2rem;
+  line-height: 1; padding: 2px;
+  transition: color 0.2s;
+}
+.ig-modal-close:hover { color: var(--ink); }
+.ig-modal-divider { height: 0.5px; background: rgba(201,168,76,0.1); flex-shrink: 0; }
+.ig-modal-caption {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.05rem; font-weight: 300;
+  font-style: italic; color: #D4C9B8;
+  line-height: 1.75; flex: 1;
+}
+.ig-modal-stats { display: flex; gap: 1.5rem; }
+.ig-modal-stat {
+  display: flex; align-items: center; gap: 5px;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.78rem; color: #8A7F74;
+}
+.ig-modal-link {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-family: 'Jost', sans-serif; font-size: 0.65rem;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--gold); text-decoration: none;
+  border-top: 0.5px solid rgba(201,168,76,0.15);
+  padding-top: 0.9rem; margin-top: auto;
+  transition: color 0.2s;
+}
+.ig-modal-link:hover { color: var(--gold-light); }
+.ig-nav-btn {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  background: rgba(7,6,5,0.65);
+  border: 0.5px solid rgba(255,255,255,0.1);
+  width: 34px; height: 34px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; color: #fff; font-size: 1.1rem;
+  transition: background 0.2s; z-index: 5;
+}
+.ig-nav-btn:hover { background: rgba(7,6,5,0.9); }
+.ig-nav-prev { left: 10px; }
+.ig-nav-next { right: 10px; }
+
+/* Responsive */
+@media (max-width: 900px) {
+  #instagram-showcase { padding: 5rem 2rem; }
+  .ig-glow-a { width: 260px; height: 260px; }
+  .ig-stats-panel { gap: 1.5rem; padding: 1rem 1.5rem; }
+  .ig-modal { flex-direction: column; }
+  .ig-modal-img { flex: 0 0 auto; min-height: 220px; }
+}
+@media (max-width: 600px) {
+  #instagram-showcase { padding: 4rem 1.4rem; }
+  .ig-profile { gap: 1.5rem; }
+  .ig-grid { grid-template-columns: repeat(3,1fr); gap: 3px; }
+  .ig-stats-panel { width: 100%; justify-content: space-around; }
+  .ig-follow-btn { width: 100%; justify-content: center; }
+  .ig-title { font-size: 1.9rem; }
+}
+
 /* FOOTER */
 footer { background: #040302; padding: 4rem 4rem 2rem; }
 .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 4rem; padding-bottom: 3rem; border-bottom: 0.5px solid rgba(201,168,76,0.1); margin-bottom: 2rem; }
@@ -1193,6 +1504,299 @@ body.cursor-click #cursor-dot {
   </div>
 </section>
 
+<!-- ═══════════════════════════════════════
+     INSTAGRAM SHOWCASE
+     To connect real data: replace MOCK_POSTS & MOCK_PROFILE
+     with fetch() calls to Instagram Basic Display API
+     GET https://graph.instagram.com/me?fields=id,username,biography,
+         profile_picture_url,followers_count&access_token=YOUR_TOKEN
+     GET https://graph.instagram.com/me/media?fields=id,media_type,
+         media_url,timestamp,like_count,comments_count,caption&access_token=YOUR_TOKEN
+═══════════════════════════════════════ -->
+<section id="instagram-showcase">
+  <div class="ig-glow ig-glow-a"></div>
+  <div class="ig-glow ig-glow-b"></div>
+
+  <div class="ig-inner">
+
+    <!-- Header -->
+    <div class="ig-header reveal">
+      <span class="ig-eyebrow">Follow Along</span>
+      <h2 class="ig-title">Design Stories, <em>Curated Daily</em></h2>
+    </div>
+
+    <!-- Profile -->
+    <div class="ig-profile reveal reveal-delay-1">
+      <div class="ig-avatar-wrap">
+        <div class="ig-avatar" id="ig-avatar-el">GC</div>
+        <div class="ig-badge">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#070605" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5"/>
+            <circle cx="12" cy="12" r="4"/>
+            <circle cx="17.5" cy="6.5" r="1.5" fill="#070605" stroke="none"/>
+          </svg>
+        </div>
+      </div>
+      <div style="flex:1;min-width:180px">
+        <div class="ig-name-row">
+          <span class="ig-full-name">Grid Crea Studio</span>
+          <span class="ig-handle">@gridcreastudio</span>
+        </div>
+        <p class="ig-bio">Interior Architecture &amp; Design Studio&#10;Crafting spaces that breathe luxury.</p>
+      </div>
+      <div class="ig-stats-panel">
+        <div class="ig-stat">
+          <div class="ig-stat-num">12.4K</div>
+          <div class="ig-stat-label">Followers</div>
+        </div>
+        <div class="ig-stat-divider"></div>
+        <div class="ig-stat">
+          <div class="ig-stat-num">312</div>
+          <div class="ig-stat-label">Following</div>
+        </div>
+        <div class="ig-stat-divider"></div>
+        <div class="ig-stat">
+          <div class="ig-stat-num">148</div>
+          <div class="ig-stat-label">Posts</div>
+        </div>
+      </div>
+      <a href="https://www.instagram.com/gridcreastudio" target="_blank" rel="noopener" class="ig-follow-btn">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="2" width="20" height="20" rx="5"/>
+          <circle cx="12" cy="12" r="4"/>
+          <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/>
+        </svg>
+        Follow on Instagram
+      </a>
+    </div>
+
+    <!-- Post Grid -->
+    <div class="ig-grid" id="ig-grid"></div>
+
+    <!-- Footer CTA -->
+    <div class="ig-cta reveal">
+      <p class="ig-cta-label">More on our feed</p>
+      <a href="https://www.instagram.com/gridcreastudio" target="_blank" rel="noopener" class="ig-outline-btn">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="2" width="20" height="20" rx="5"/>
+          <circle cx="12" cy="12" r="4"/>
+          <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/>
+        </svg>
+        @gridcreastudio
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Lightbox -->
+<div id="ig-lightbox" onclick="igCloseOnBackdrop(event)">
+  <div class="ig-modal" id="ig-modal">
+    <div class="ig-modal-img" id="ig-modal-img">
+      <button class="ig-nav-btn ig-nav-prev" id="ig-prev" onclick="igNav(-1)">&#8249;</button>
+      <button class="ig-nav-btn ig-nav-next" id="ig-next" onclick="igNav(1)">&#8250;</button>
+    </div>
+    <div class="ig-modal-info">
+      <div class="ig-modal-user">
+        <div class="ig-modal-avatar">GC</div>
+        <div>
+          <div class="ig-modal-uname">gridcreastudio</div>
+          <div class="ig-modal-date" id="ig-modal-date"></div>
+        </div>
+        <button class="ig-modal-close" onclick="igClose()">&#215;</button>
+      </div>
+      <div class="ig-modal-divider"></div>
+      <p class="ig-modal-caption" id="ig-modal-caption"></p>
+      <div class="ig-modal-divider"></div>
+      <div class="ig-modal-stats">
+        <div class="ig-modal-stat">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#C9A84C" stroke="none"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          <span id="ig-modal-likes"></span>
+        </div>
+        <div class="ig-modal-stat">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#C9A84C" stroke="none"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          <span id="ig-modal-comments"></span>
+        </div>
+      </div>
+      <a href="https://www.instagram.com/gridcreastudio" target="_blank" rel="noopener" class="ig-modal-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+          <polyline points="15 3 21 3 21 9"/>
+          <line x1="10" y1="14" x2="21" y2="3"/>
+        </svg>
+        View on Instagram
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  /* ── MOCK DATA — replace with real Instagram API responses ── */
+  var IG_PROFILE = {
+    username: 'gridcreastudio',
+    full_name: 'Grid Crea Studio',
+    biography: 'Interior Architecture & Design Studio\nCrafting spaces that breathe luxury.',
+    followers_count: '12.4K',
+    following_count: 312,
+    posts_count: 148,
+    profile_picture_url: null,
+    instagram_url: 'https://www.instagram.com/gridcreastudio'
+  };
+
+  var ACCENTS = [
+    ['#1A1612','#2A2218'],['#12181A','#182228'],['#1A1218','#221828'],
+    ['#181A12','#222812'],['#1A1614','#2C211C'],['#141418','#1E1E26'],
+    ['#18161A','#26222A'],['#1A1816','#28231E'],['#141A18','#1E2826']
+  ];
+
+  var CAPTIONS = [
+    'Redefining spatial boundaries through materiality and light. ✦',
+    'Where raw concrete meets warm timber — a study in contrast.',
+    'Luminous interiors, crafted for those who live intentionally.',
+    'The art of restraint. Less detail, more presence.',
+    'Editorial space design for a private residence in Bangalore.',
+    'When the brief says "minimal" but the soul says "opulent".',
+    'Letting light be the architect. Study in Bangalore, 2024.',
+    'Texture is the silent language of a room.',
+    'Bespoke millwork as sculpture. Craft-forward living.'
+  ];
+
+  var IG_POSTS = Array.from({length: 9}, function(_, i) {
+    return {
+      id: i,
+      media_url: null,
+      caption: CAPTIONS[i],
+      like_count: Math.floor(Math.random() * 700 + 180),
+      comments_count: Math.floor(Math.random() * 55 + 8),
+      timestamp: new Date(Date.now() - i * 5 * 86400000).toISOString(),
+      accent: ACCENTS[i]
+    };
+  });
+  /* ─────────────────────────────────────────────────────────── */
+
+  var currentIdx = 0;
+
+  /* Build grid */
+  var grid = document.getElementById('ig-grid');
+  IG_POSTS.forEach(function(post, i) {
+    var delay = (i % 3) * 70 + Math.floor(i / 3) * 110;
+    var card = document.createElement('div');
+    card.className = 'ig-post';
+    card.style.transitionDelay = delay + 'ms';
+    card.innerHTML =
+      '<div class="ig-skel"></div>' +
+      '<div class="ig-post-bg" style="background:radial-gradient(ellipse at 32% 36%,' + post.accent[1] + ' 0%,' + post.accent[0] + ' 68%);">' +
+        '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(201,168,76,0.18)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">' +
+          '<rect x="2" y="2" width="20" height="20" rx="5"/>' +
+          '<circle cx="12" cy="12" r="4"/>' +
+          '<circle cx="17.5" cy="6.5" r="1.5" fill="rgba(201,168,76,0.18)" stroke="none"/>' +
+        '</svg>' +
+      '</div>' +
+      '<div class="ig-overlay">' +
+        '<div class="ig-overlay-stat">' +
+          '<svg width="17" height="17" viewBox="0 0 24 24" fill="#fff" stroke="none"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>' +
+          post.like_count +
+        '</div>' +
+        '<div class="ig-overlay-stat">' +
+          '<svg width="17" height="17" viewBox="0 0 24 24" fill="#fff" stroke="none"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>' +
+          post.comments_count +
+        '</div>' +
+      '</div>' +
+      '<div class="ig-post-bar"></div>';
+
+    /* If real image available */
+    if (post.media_url) {
+      var img = document.createElement('img');
+      img.src = post.media_url;
+      img.alt = post.caption;
+      img.loading = 'lazy';
+      img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;';
+      img.onload = function() {
+        var skel = card.querySelector('.ig-skel');
+        if (skel) skel.remove();
+      };
+      card.insertBefore(img, card.querySelector('.ig-overlay'));
+    } else {
+      /* Remove shimmer immediately for placeholder */
+      setTimeout(function() {
+        var skel = card.querySelector('.ig-skel');
+        if (skel) skel.style.display = 'none';
+      }, 400);
+    }
+
+    card.addEventListener('click', function() { igOpen(i); });
+    grid.appendChild(card);
+  });
+
+  /* Scroll reveal for posts */
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) {
+        e.target.classList.add('ig-visible');
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.05 });
+  grid.querySelectorAll('.ig-post').forEach(function(c) { obs.observe(c); });
+
+  /* Lightbox */
+  window.igOpen = function(idx) {
+    currentIdx = idx;
+    var post = IG_POSTS[idx];
+    var imgPane = document.getElementById('ig-modal-img');
+
+    /* Clear old bg */
+    var oldBg = imgPane.querySelector('.ig-modal-bg');
+    if (oldBg) oldBg.remove();
+    var oldImg = imgPane.querySelector('img');
+    if (oldImg) oldImg.remove();
+
+    if (post.media_url) {
+      var img = document.createElement('img');
+      img.src = post.media_url;
+      img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;';
+      imgPane.insertBefore(img, imgPane.querySelector('.ig-nav-btn'));
+    } else {
+      var bg = document.createElement('div');
+      bg.className = 'ig-modal-bg';
+      bg.style.cssText = 'width:100%;height:100%;min-height:300px;background:radial-gradient(ellipse at 35% 35%,' + post.accent[1] + ' 0%,' + post.accent[0] + ' 70%);display:flex;align-items:center;justify-content:center;';
+      bg.innerHTML = '<svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="rgba(201,168,76,0.2)" stroke-width="1.1"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.5" fill="rgba(201,168,76,0.2)" stroke="none"/></svg>';
+      imgPane.insertBefore(bg, imgPane.querySelector('.ig-nav-btn'));
+    }
+
+    document.getElementById('ig-modal-caption').textContent = post.caption;
+    document.getElementById('ig-modal-likes').textContent = post.like_count + ' likes';
+    document.getElementById('ig-modal-comments').textContent = post.comments_count + ' comments';
+    document.getElementById('ig-modal-date').textContent = new Date(post.timestamp).toLocaleDateString('en-IN', {day:'numeric', month:'short', year:'numeric'});
+    document.getElementById('ig-prev').style.display = idx > 0 ? 'flex' : 'none';
+    document.getElementById('ig-next').style.display = idx < IG_POSTS.length - 1 ? 'flex' : 'none';
+    document.getElementById('ig-lightbox').classList.add('ig-open');
+    document.body.style.overflow = 'hidden';
+  };
+
+  window.igClose = function() {
+    document.getElementById('ig-lightbox').classList.remove('ig-open');
+    document.body.style.overflow = '';
+  };
+
+  window.igCloseOnBackdrop = function(e) {
+    if (e.target === document.getElementById('ig-lightbox')) igClose();
+  };
+
+  window.igNav = function(dir) {
+    var n = currentIdx + dir;
+    if (n >= 0 && n < IG_POSTS.length) igOpen(n);
+  };
+
+  document.addEventListener('keydown', function(e) {
+    if (!document.getElementById('ig-lightbox').classList.contains('ig-open')) return;
+    if (e.key === 'Escape') igClose();
+    if (e.key === 'ArrowLeft') igNav(-1);
+    if (e.key === 'ArrowRight') igNav(1);
+  });
+})();
+</script>
+
 <!-- FOOTER -->
 <footer>
   <div class="footer-grid">
@@ -1230,7 +1834,7 @@ body.cursor-click #cursor-dot {
   <div class="footer-bottom">
     <span class="footer-copy" data-cms="footer_copy"></span>
     <div class="footer-socials">
-      <a href="#" data-cms="social_instagram" id="social-ig-link">Instagram</a>
+      <a href="https://www.instagram.com/gridcreastudio" target="_blank" rel="noopener" data-cms="social_instagram" id="social-ig-link">Instagram</a>
       <a href="#" data-cms="social_pinterest" id="social-pin-link">Pinterest</a>
       <a href="#" data-cms="social_linkedin" id="social-li-link">LinkedIn</a>
     </div>
@@ -1275,6 +1879,7 @@ body.cursor-click #cursor-dot {
         <button class="cms-tab" data-tab="about">About</button>
         <button class="cms-tab" data-tab="contact">Contact</button>
         <button class="cms-tab" data-tab="settings">⚙ Settings</button>
+        <button class="cms-tab" data-tab="instagram">📷 Instagram</button>
       </div>
 
       <div id="cms-content">
@@ -1478,6 +2083,68 @@ body.cursor-click #cursor-dot {
           <p id="reset-msg" style="margin-top:0.8rem;font-size:0.78rem;color:var(--stone);text-align:center;display:none;">Content reset to defaults.</p>
         </div>
 
+        <!-- INSTAGRAM TAB -->
+        <div class="cms-section" data-section="instagram">
+
+          <!-- Status banner -->
+          <div id="ig-cms-status" style="display:none;padding:0.7rem 1rem;margin-bottom:1.2rem;font-family:'Jost',sans-serif;font-size:0.78rem;letter-spacing:0.06em;border:0.5px solid;"></div>
+
+          <p class="cms-group-title">Connect Instagram</p>
+          <p style="font-size:0.8rem;color:var(--stone);line-height:1.75;margin-bottom:1.2rem;">
+            Paste your Instagram Basic Display API access token below to automatically pull your latest posts and profile info into the showcase section.
+            <br><br>
+            <strong style="color:var(--gold);font-weight:500;">How to get a token:</strong> Go to
+            <a href="https://developers.facebook.com/docs/instagram-basic-display-api/getting-started" target="_blank" rel="noopener" style="color:var(--gold);text-underline-offset:3px;">Meta Developers</a>
+            → create an app → Instagram Basic Display → generate a User Token.
+          </p>
+
+          <div class="cms-field">
+            <label>Access Token</label>
+            <textarea id="ig-token-input" style="font-size:0.72rem;font-family:monospace;min-height:70px;" placeholder="Paste your Instagram access token here…"></textarea>
+          </div>
+
+          <button id="ig-connect-btn" style="width:100%;background:var(--gold);border:none;padding:0.8rem 1.4rem;font-family:'Jost',sans-serif;font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;color:#070605;cursor:pointer;transition:background 0.2s;margin-bottom:1.2rem;">
+            Connect &amp; Fetch Posts
+          </button>
+
+          <button id="ig-disconnect-btn" style="display:none;width:100%;background:rgba(220,70,70,0.1);border:0.5px solid rgba(220,70,70,0.3);padding:0.7rem 1.4rem;font-family:'Jost',sans-serif;font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;color:#e07070;cursor:pointer;transition:all 0.2s;margin-bottom:1.5rem;">
+            Disconnect Instagram
+          </button>
+
+          <!-- Live profile preview -->
+          <div id="ig-cms-preview" style="display:none;">
+            <p class="cms-group-title">Connected Profile</p>
+            <div style="display:flex;align-items:center;gap:1rem;padding:1rem;background:rgba(255,255,255,0.03);border:0.5px solid rgba(201,168,76,0.15);margin-bottom:1.5rem;">
+              <div id="ig-cms-avatar" style="width:48px;height:48px;border-radius:50%;background:rgba(201,168,76,0.12);border:1px solid rgba(201,168,76,0.3);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:14px;color:var(--gold);overflow:hidden;flex-shrink:0;">GC</div>
+              <div>
+                <div id="ig-cms-uname" style="font-family:'Jost',sans-serif;font-size:0.85rem;color:var(--warm-white);font-weight:500;letter-spacing:0.06em;">—</div>
+                <div id="ig-cms-followers" style="font-family:'Jost',sans-serif;font-size:0.72rem;color:var(--stone);margin-top:2px;">— followers</div>
+              </div>
+              <div id="ig-cms-dot" style="width:8px;height:8px;border-radius:50%;background:#3ecf8e;margin-left:auto;flex-shrink:0;" title="Connected"></div>
+            </div>
+
+            <p class="cms-group-title">Profile Overrides <span style="font-size:0.68rem;color:var(--stone);font-family:'Jost',sans-serif;font-weight:400;letter-spacing:0.06em;">(optional — leave blank to use live values)</span></p>
+            <div class="cms-field"><label>Display Name Override</label><input type="text" id="ig-override-name" placeholder="e.g. Grid Crea Studio"></div>
+            <div class="cms-field"><label>Bio Override</label><textarea id="ig-override-bio" style="min-height:60px;" placeholder="e.g. Interior Architecture &amp; Design Studio"></textarea></div>
+            <div class="cms-field"><label>Followers Display Override</label><input type="text" id="ig-override-followers" placeholder="e.g. 12.4K"></div>
+
+            <button id="ig-apply-overrides-btn" style="width:100%;background:transparent;border:0.5px solid var(--gold);padding:0.7rem 1.4rem;font-family:'Jost',sans-serif;font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);cursor:pointer;transition:all 0.2s;margin-bottom:1.5rem;">
+              Apply Overrides &amp; Save
+            </button>
+
+            <p class="cms-group-title">Post Grid Preview <span id="ig-post-count" style="font-size:0.7rem;color:var(--stone);font-weight:400;font-family:'Jost',sans-serif;letter-spacing:0.06em;"></span></p>
+            <div id="ig-cms-post-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-bottom:1rem;"></div>
+            <p style="font-size:0.75rem;color:var(--stone);line-height:1.7;">Showing your 9 most recent posts. The live section on your site updates automatically each time a visitor loads the page.</p>
+          </div>
+
+          <!-- Not connected state -->
+          <div id="ig-cms-empty" style="text-align:center;padding:2rem 1rem;">
+            <div style="font-size:2rem;margin-bottom:0.75rem;opacity:0.3;">📷</div>
+            <p style="font-family:'Jost',sans-serif;font-size:0.8rem;color:var(--stone);line-height:1.75;">No Instagram account connected yet.<br>Paste your access token above to get started.</p>
+          </div>
+
+        </div><!-- end instagram tab -->
+
       </div><!-- end cms-content -->
     </div><!-- end cms-editor -->
   </div><!-- end cms-inner -->
@@ -1609,7 +2276,7 @@ function renderSite() {
   const fa = document.getElementById('footer-address-link');
   if (fa) { fa.textContent = data.footer_address; }
   const ig = document.getElementById('social-ig-link');
-  if (ig) ig.href = data.social_instagram || '#';
+  if (ig) ig.href = data.social_instagram || 'https://www.instagram.com/gridcreastudio';
   const pin = document.getElementById('social-pin-link');
   if (pin) pin.href = data.social_pinterest || '#';
   const li = document.getElementById('social-li-link');
@@ -2169,6 +2836,265 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
     });
   }
+  // ═══════════════════════════════
+  // INSTAGRAM CMS TAB LOGIC
+  // ═══════════════════════════════
+  (function() {
+    const IG_TOKEN_KEY = 'gcs:ig_token';
+    const IG_DATA_KEY  = 'gcs:ig_data';
+    const IG_OVER_KEY  = 'gcs:ig_overrides';
+
+    function igStore(key, val) {
+      try { localStorage.setItem(key, typeof val === 'string' ? val : JSON.stringify(val)); } catch(e) {}
+    }
+    function igRead(key) {
+      try { return localStorage.getItem(key); } catch(e) { return null; }
+    }
+
+    function igStatus(msg, type) {
+      const el = document.getElementById('ig-cms-status');
+      if (!el) return;
+      el.style.display = 'block';
+      el.textContent = msg;
+      if (type === 'ok') {
+        el.style.background = 'rgba(62,207,142,0.08)';
+        el.style.borderColor = 'rgba(62,207,142,0.3)';
+        el.style.color = '#3ecf8e';
+      } else if (type === 'err') {
+        el.style.background = 'rgba(220,70,70,0.08)';
+        el.style.borderColor = 'rgba(220,70,70,0.3)';
+        el.style.color = '#e07070';
+      } else {
+        el.style.background = 'rgba(201,168,76,0.08)';
+        el.style.borderColor = 'rgba(201,168,76,0.2)';
+        el.style.color = '#C9A84C';
+      }
+    }
+
+    function igRenderPreview(profile, posts, overrides) {
+      overrides = overrides || {};
+      document.getElementById('ig-cms-empty').style.display = 'none';
+      document.getElementById('ig-cms-preview').style.display = 'block';
+      document.getElementById('ig-disconnect-btn').style.display = 'block';
+
+      // Avatar
+      const avatarEl = document.getElementById('ig-cms-avatar');
+      if (profile.profile_picture_url) {
+        avatarEl.innerHTML = '<img src="' + profile.profile_picture_url + '" style="width:100%;height:100%;object-fit:cover;">';
+      } else {
+        avatarEl.textContent = (profile.username || 'GC').slice(0,2).toUpperCase();
+      }
+
+      document.getElementById('ig-cms-uname').textContent = '@' + (profile.username || '');
+      document.getElementById('ig-cms-followers').textContent =
+        (overrides.followers || profile.followers_count || '—') + ' followers';
+
+      // Load overrides into fields
+      document.getElementById('ig-override-name').value = overrides.name || '';
+      document.getElementById('ig-override-bio').value  = overrides.bio  || '';
+      document.getElementById('ig-override-followers').value = overrides.followers || '';
+
+      // Post mini-grid
+      const grid = document.getElementById('ig-cms-post-grid');
+      document.getElementById('ig-post-count').textContent = '(' + posts.length + ' posts)';
+      const ACCENTS = [['#1A1612','#2A2218'],['#12181A','#182228'],['#1A1218','#221828'],
+        ['#181A12','#222812'],['#1A1614','#2C211C'],['#141418','#1E1E26'],
+        ['#18161A','#26222A'],['#1A1816','#28231E'],['#141A18','#1E2826']];
+      grid.innerHTML = posts.slice(0,9).map(function(p, i) {
+        var ac = ACCENTS[i % ACCENTS.length];
+        var bg = p.media_url
+          ? 'url(' + p.media_url + ') center/cover'
+          : 'radial-gradient(ellipse at 35% 35%,' + ac[1] + ' 0%,' + ac[0] + ' 70%)';
+        return '<div style="aspect-ratio:1;background:' + bg + ';position:relative;">' +
+          '<div style="position:absolute;bottom:0;left:0;right:0;padding:3px 4px;background:rgba(0,0,0,0.55);font-family:\'Jost\',sans-serif;font-size:9px;color:#C9A84C;letter-spacing:0.06em;">♥ ' + (p.like_count || 0) + '</div>' +
+          '</div>';
+      }).join('');
+    }
+
+    function igApplyToSite(profile, posts, overrides) {
+      overrides = overrides || {};
+      // Update ig-avatar on showcase section
+      var av = document.getElementById('ig-avatar-el');
+      if (av) {
+        if (profile.profile_picture_url) {
+          av.innerHTML = '<img src="' + profile.profile_picture_url + '" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">';
+        } else {
+          av.textContent = (profile.username || 'GC').slice(0,2).toUpperCase();
+        }
+      }
+      // Update full name
+      var fn = document.querySelector('.ig-full-name');
+      if (fn) fn.textContent = overrides.name || profile.name || 'Grid Crea Studio';
+      // Update handle
+      var hd = document.querySelector('.ig-handle');
+      if (hd) hd.textContent = '@' + (profile.username || 'gridcreastudio');
+      // Update bio
+      var bio = document.querySelector('.ig-bio');
+      if (bio) bio.textContent = overrides.bio || profile.biography || '';
+      // Update stats
+      var stats = document.querySelectorAll('.ig-stat-num');
+      if (stats[0]) stats[0].textContent = overrides.followers || profile.followers_count || '—';
+      if (stats[1]) stats[1].textContent = profile.following_count || '—';
+      if (stats[2]) stats[2].textContent = profile.posts_count || '—';
+
+      // Rebuild post grid with real images
+      var grid = document.getElementById('ig-grid');
+      if (!grid || !posts.length) return;
+      grid.innerHTML = '';
+      var ACCENTS = [['#1A1612','#2A2218'],['#12181A','#182228'],['#1A1218','#221828'],
+        ['#181A12','#222812'],['#1A1614','#2C211C'],['#141418','#1E1E26'],
+        ['#18161A','#26222A'],['#1A1816','#28231E'],['#141A18','#1E2826']];
+
+      posts.slice(0,9).forEach(function(post, i) {
+        var delay = (i % 3) * 70 + Math.floor(i / 3) * 110;
+        var ac = ACCENTS[i % ACCENTS.length];
+        var card = document.createElement('div');
+        card.className = 'ig-post';
+        card.style.transitionDelay = delay + 'ms';
+        var imgHtml = post.media_url
+          ? '<img src="' + post.media_url + '" alt="" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">'
+          : '<div class="ig-post-bg" style="position:absolute;inset:0;background:radial-gradient(ellipse at 32% 36%,' + ac[1] + ' 0%,' + ac[0] + ' 68%);"></div>';
+        card.innerHTML = imgHtml +
+          '<div class="ig-overlay">' +
+            '<div class="ig-overlay-stat"><svg width="17" height="17" viewBox="0 0 24 24" fill="#fff" stroke="none"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>' + (post.like_count || 0) + '</div>' +
+            '<div class="ig-overlay-stat"><svg width="17" height="17" viewBox="0 0 24 24" fill="#fff" stroke="none"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>' + (post.comments_count || 0) + '</div>' +
+          '</div>' +
+          '<div class="ig-post-bar"></div>';
+        var captionText = post.caption || '';
+        var timestampStr = post.timestamp || new Date().toISOString();
+        card.addEventListener('click', (function(p, idx) {
+          return function() {
+            window.igOpen && window.igOpen(idx);
+          };
+        })(post, i));
+        grid.appendChild(card);
+        // Re-map window.igOpen posts
+      });
+
+      // Patch the lightbox data with real posts
+      window._igRealPosts = posts.slice(0,9);
+
+      // Re-observe for scroll reveal
+      if (window._observeRevealElements) window._observeRevealElements();
+      var obs2 = new IntersectionObserver(function(entries) {
+        entries.forEach(function(e) {
+          if (e.isIntersecting) { e.target.classList.add('ig-visible'); obs2.unobserve(e.target); }
+        });
+      }, { threshold: 0.05 });
+      grid.querySelectorAll('.ig-post').forEach(function(c) { obs2.observe(c); });
+    }
+
+    async function igFetch(token) {
+      igStatus('Connecting to Instagram…', 'info');
+      // Fetch profile
+      var profileRes = await fetch(
+        'https://graph.instagram.com/me?fields=id,username,name,biography,profile_picture_url,followers_count,following_count,media_count&access_token=' + token
+      );
+      if (!profileRes.ok) {
+        var err = await profileRes.json().catch(function(){return {};});
+        throw new Error(err.error && err.error.message ? err.error.message : 'Invalid token or API error');
+      }
+      var profile = await profileRes.json();
+      profile.posts_count = profile.media_count;
+
+      igStatus('Fetching posts…', 'info');
+      // Fetch posts
+      var postsRes = await fetch(
+        'https://graph.instagram.com/me/media?fields=id,media_type,media_url,thumbnail_url,timestamp,like_count,comments_count,caption&limit=9&access_token=' + token
+      );
+      var postsData = await postsRes.json();
+      var posts = (postsData.data || []).filter(function(p) {
+        return p.media_type === 'IMAGE' || p.media_type === 'CAROUSEL_ALBUM';
+      });
+
+      return { profile: profile, posts: posts };
+    }
+
+    // Init — load any saved state
+    function igInit() {
+      var savedToken = igRead(IG_TOKEN_KEY);
+      var savedData  = igRead(IG_DATA_KEY);
+      var savedOver  = igRead(IG_OVER_KEY);
+
+      if (savedToken) {
+        document.getElementById('ig-token-input').value = savedToken;
+      }
+      if (savedData) {
+        try {
+          var d = JSON.parse(savedData);
+          var ov = savedOver ? JSON.parse(savedOver) : {};
+          igRenderPreview(d.profile, d.posts, ov);
+          igApplyToSite(d.profile, d.posts, ov);
+          igStatus('Connected — showing saved data. Click "Connect & Fetch Posts" to refresh.', 'ok');
+        } catch(e) {}
+      }
+    }
+
+    // Connect button
+    var connectBtn = document.getElementById('ig-connect-btn');
+    if (connectBtn) {
+      connectBtn.addEventListener('click', async function() {
+        var token = (document.getElementById('ig-token-input').value || '').trim();
+        if (!token) { igStatus('Please paste your access token first.', 'err'); return; }
+        connectBtn.textContent = 'Connecting…';
+        connectBtn.disabled = true;
+        try {
+          var result = await igFetch(token);
+          igStore(IG_TOKEN_KEY, token);
+          igStore(IG_DATA_KEY, result);
+          var ov = igRead(IG_OVER_KEY) ? JSON.parse(igRead(IG_OVER_KEY)) : {};
+          igRenderPreview(result.profile, result.posts, ov);
+          igApplyToSite(result.profile, result.posts, ov);
+          igStatus('✓ Connected as @' + result.profile.username + ' — ' + result.posts.length + ' posts loaded.', 'ok');
+        } catch(e) {
+          igStatus('Connection failed: ' + e.message, 'err');
+        }
+        connectBtn.textContent = 'Connect & Fetch Posts';
+        connectBtn.disabled = false;
+      });
+    }
+
+    // Disconnect button
+    var disconnectBtn = document.getElementById('ig-disconnect-btn');
+    if (disconnectBtn) {
+      disconnectBtn.addEventListener('click', function() {
+        if (!confirm('Disconnect Instagram? The section will revert to placeholder content.')) return;
+        try { localStorage.removeItem(IG_TOKEN_KEY); localStorage.removeItem(IG_DATA_KEY); localStorage.removeItem(IG_OVER_KEY); } catch(e) {}
+        document.getElementById('ig-token-input').value = '';
+        document.getElementById('ig-cms-preview').style.display = 'none';
+        document.getElementById('ig-cms-empty').style.display = 'block';
+        document.getElementById('ig-disconnect-btn').style.display = 'none';
+        igStatus('Disconnected. The section now shows placeholder content.', 'info');
+      });
+    }
+
+    // Apply overrides button
+    var overBtn = document.getElementById('ig-apply-overrides-btn');
+    if (overBtn) {
+      overBtn.addEventListener('click', function() {
+        var savedData = igRead(IG_DATA_KEY);
+        if (!savedData) { igStatus('Connect Instagram first.', 'err'); return; }
+        var d = JSON.parse(savedData);
+        var ov = {
+          name:      document.getElementById('ig-override-name').value.trim(),
+          bio:       document.getElementById('ig-override-bio').value.trim(),
+          followers: document.getElementById('ig-override-followers').value.trim()
+        };
+        igStore(IG_OVER_KEY, ov);
+        igApplyToSite(d.profile, d.posts, ov);
+        document.getElementById('ig-cms-followers').textContent = (ov.followers || d.profile.followers_count || '—') + ' followers';
+        igStatus('✓ Overrides saved and applied.', 'ok');
+      });
+    }
+
+    // Run on tab switch (lazy init)
+    document.addEventListener('click', function(e) {
+      if (e.target && e.target.dataset && e.target.dataset.tab === 'instagram') {
+        igInit();
+      }
+    });
+  })();
+
 });
 </script>
 
