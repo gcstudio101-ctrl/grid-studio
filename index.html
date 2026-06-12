@@ -1885,74 +1885,35 @@ body.cursor-click #cursor-dot {
 
         <!-- INSTAGRAM TAB -->
         <div class="cms-section" data-section="instagram">
-
-          <!-- Status banner -->
-          <div id="ig-cms-status" style="display:none;padding:0.7rem 1rem;margin-bottom:1.2rem;font-family:'Jost',sans-serif;font-size:0.78rem;letter-spacing:0.06em;border:0.5px solid;"></div>
-
-          <p class="cms-group-title">Connect Instagram</p>
-          <p style="font-size:0.8rem;color:var(--stone);line-height:1.75;margin-bottom:1.2rem;">
-            Paste your Instagram Basic Display API access token below to automatically pull your latest posts and profile info into the showcase section.
-            <br><br>
-            <strong style="color:var(--gold);font-weight:500;">How to get a token:</strong> Go to
-            <a href="https://developers.facebook.com/docs/instagram-basic-display-api/getting-started" target="_blank" rel="noopener" style="color:var(--gold);text-underline-offset:3px;">Meta Developers</a>
-            → create an app → Instagram Basic Display → generate a User Token.
-          </p>
-
+          <p class="cms-group-title">Instagram Profile Card</p>
+          
+          <div class="cms-img-field">
+            <label>Profile Picture</label>
+            <div class="cms-img-preview" id="preview-ig-profile-pic">
+              <div class="upload-hint"><span class="upload-icon">↑</span><span>Click to upload profile pic</span></div>
+              <input type="file" accept="image/*" data-img-key="ig_profile_pic">
+            </div>
+            <button class="cms-img-remove" data-remove="ig_profile_pic">Remove image</button>
+          </div>
+          
           <div class="cms-field">
-            <label>Access Token</label>
-            <textarea id="ig-token-input" style="font-size:0.72rem;font-family:monospace;min-height:70px;" placeholder="Paste your Instagram access token here…"></textarea>
+            <label>Bio</label>
+            <textarea id="cms-ig-bio" style="min-height:80px;" placeholder="Enter your Instagram bio..."></textarea>
           </div>
-
-          <button id="ig-connect-btn" style="width:100%;background:var(--gold);border:none;padding:0.8rem 1.4rem;font-family:'Jost',sans-serif;font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;color:#070605;cursor:pointer;transition:background 0.2s;margin-bottom:1.2rem;">
-            Connect &amp; Fetch Posts
+          
+          <div class="cms-field">
+            <label>Follower Count</label>
+            <input type="text" id="cms-ig-followers" placeholder="e.g. 12.4K">
+          </div>
+          
+          <div class="cms-field">
+            <label>Following Count</label>
+            <input type="text" id="cms-ig-following" placeholder="e.g. 312">
+          </div>
+          
+          <button id="cms-ig-save-btn" style="width:100%;background:var(--gold);border:none;padding:0.8rem 1.4rem;font-family:'Jost',sans-serif;font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;color:#070605;cursor:pointer;transition:background 0.2s;margin-top:1.5rem;">
+            Save Instagram Profile
           </button>
-
-          <button id="ig-disconnect-btn" style="display:none;width:100%;background:rgba(220,70,70,0.1);border:0.5px solid rgba(220,70,70,0.3);padding:0.7rem 1.4rem;font-family:'Jost',sans-serif;font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;color:#e07070;cursor:pointer;transition:all 0.2s;margin-bottom:1.5rem;">
-            Disconnect Instagram
-          </button>
-
-          <!-- Live profile preview -->
-          <div id="ig-cms-preview" style="display:none;">
-            <p class="cms-group-title">Connected Profile</p>
-            <div style="display:flex;align-items:center;gap:1rem;padding:1rem;background:rgba(255,255,255,0.03);border:0.5px solid rgba(201,168,76,0.15);margin-bottom:1.5rem;">
-              <div id="ig-cms-avatar" style="width:48px;height:48px;border-radius:50%;background:rgba(201,168,76,0.12);border:1px solid rgba(201,168,76,0.3);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:14px;color:var(--gold);overflow:hidden;flex-shrink:0;">GC</div>
-              <div>
-                <div id="ig-cms-uname" style="font-family:'Jost',sans-serif;font-size:0.85rem;color:var(--warm-white);font-weight:500;letter-spacing:0.06em;">—</div>
-                <div id="ig-cms-followers" style="font-family:'Jost',sans-serif;font-size:0.72rem;color:var(--stone);margin-top:2px;">— followers</div>
-              </div>
-              <div id="ig-cms-dot" style="width:8px;height:8px;border-radius:50%;background:#3ecf8e;margin-left:auto;flex-shrink:0;" title="Connected"></div>
-            </div>
-
-            <p class="cms-group-title">Profile Overrides <span style="font-size:0.68rem;color:var(--stone);font-family:'Jost',sans-serif;font-weight:400;letter-spacing:0.06em;">(optional — leave blank to use live values)</span></p>
-            
-            <div class="cms-img-field">
-              <label>Profile Picture</label>
-              <div class="cms-img-preview" id="preview-ig-profile-pic">
-                <div class="upload-hint"><span class="upload-icon">↑</span><span>Click to upload profile pic</span></div>
-                <input type="file" accept="image/*" data-img-key="ig_profile_pic">
-              </div>
-              <button class="cms-img-remove" data-remove="ig_profile_pic">Remove image</button>
-            </div>
-            
-            <div class="cms-field"><label>Display Name Override</label><input type="text" id="ig-override-name" placeholder="e.g. Grid Crea Studio"></div>
-            <div class="cms-field"><label>Bio Override</label><textarea id="ig-override-bio" style="min-height:60px;" placeholder="e.g. Interior Architecture &amp; Design Studio"></textarea></div>
-            <div class="cms-field"><label>Followers Display Override</label><input type="text" id="ig-override-followers" placeholder="e.g. 12.4K"></div>
-            <div class="cms-field"><label>Following Display Override</label><input type="text" id="ig-override-following" placeholder="e.g. 312"></div>
-
-            <button id="ig-apply-overrides-btn" style="width:100%;background:transparent;border:0.5px solid var(--gold);padding:0.7rem 1.4rem;font-family:'Jost',sans-serif;font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);cursor:pointer;transition:all 0.2s;margin-bottom:1.5rem;">
-              Apply Overrides &amp; Save
-            </button>
-
-            <p class="cms-group-title">Post Grid Preview <span id="ig-post-count" style="font-size:0.7rem;color:var(--stone);font-weight:400;font-family:'Jost',sans-serif;letter-spacing:0.06em;"></span></p>
-            <div id="ig-cms-post-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-bottom:1rem;"></div>
-            <p style="font-size:0.75rem;color:var(--stone);line-height:1.7;">Showing your 9 most recent posts. The live section on your site updates automatically each time a visitor loads the page.</p>
-          </div>
-
-          <!-- Not connected state -->
-          <div id="ig-cms-empty" style="text-align:center;padding:2rem 1rem;">
-            <div style="font-size:2rem;margin-bottom:0.75rem;opacity:0.3;">📷</div>
-            <p style="font-family:'Jost',sans-serif;font-size:0.8rem;color:var(--stone);line-height:1.75;">No Instagram account connected yet.<br>Paste your access token above to get started.</p>
-          </div>
 
         </div><!-- end instagram tab -->
 
@@ -2528,8 +2489,85 @@ document.addEventListener('DOMContentLoaded', async () => {
     showToast();
   });
 
+  // ── Instagram CMS Save ─────────────────────────────────────
+  const cmsIgSaveBtn = document.getElementById('cms-ig-save-btn');
+  if (cmsIgSaveBtn) {
+    cmsIgSaveBtn.addEventListener('click', async () => {
+      const bio = document.getElementById('cms-ig-bio').value.trim();
+      const followers = document.getElementById('cms-ig-followers').value.trim();
+      const following = document.getElementById('cms-ig-following').value.trim();
+      
+      // Update the profile elements
+      const bioEl = document.getElementById('ig-bio');
+      const followersEl = document.getElementById('ig-followers');
+      const followingEl = document.getElementById('ig-following');
+      
+      if (bioEl && bio) bioEl.textContent = bio;
+      if (followersEl && followers) followersEl.textContent = followers;
+      if (followingEl && following) followingEl.textContent = following;
+      
+      // Save to localStorage
+      const igData = {
+        bio: bio,
+        followers: followers,
+        following: following
+      };
+      try {
+        if (window.storage) {
+          await window.storage.set('ig_profile_data', JSON.stringify(igData));
+        } else {
+          localStorage.setItem('ig_profile_data', JSON.stringify(igData));
+        }
+      } catch(e) {}
+      
+      // Show success message
+      const saveBtn = cmsIgSaveBtn;
+      const origText = saveBtn.textContent;
+      saveBtn.textContent = '✓ Saved!';
+      saveBtn.style.background = '#3ecf8e';
+      setTimeout(() => {
+        saveBtn.textContent = origText;
+        saveBtn.style.background = 'var(--gold)';
+      }, 2000);
+    });
+  }
 
-  // ── Settings tab: change password ──────────────────────────
+  // ── Load saved Instagram data on page load ─────────────────
+  async function loadInstagramData() {
+    try {
+      let igData = null;
+      if (window.storage) {
+        const r = await window.storage.get('ig_profile_data');
+        if (r) igData = JSON.parse(r.value);
+      } else {
+        const saved = localStorage.getItem('ig_profile_data');
+        if (saved) igData = JSON.parse(saved);
+      }
+      
+      if (igData) {
+        const bioEl = document.getElementById('ig-bio');
+        const followersEl = document.getElementById('ig-followers');
+        const followingEl = document.getElementById('ig-following');
+        
+        if (bioEl && igData.bio) bioEl.textContent = igData.bio;
+        if (followersEl && igData.followers) followersEl.textContent = igData.followers;
+        if (followingEl && igData.following) followingEl.textContent = igData.following;
+        
+        // Load into CMS fields for editing
+        const cmsBioEl = document.getElementById('cms-ig-bio');
+        const cmsFollowersEl = document.getElementById('cms-ig-followers');
+        const cmsFollowingEl = document.getElementById('cms-ig-following');
+        
+        if (cmsBioEl && igData.bio) cmsBioEl.value = igData.bio;
+        if (cmsFollowersEl && igData.followers) cmsFollowersEl.value = igData.followers;
+        if (cmsFollowingEl && igData.following) cmsFollowingEl.value = igData.following;
+      }
+    } catch(e) {}
+  }
+  
+  loadInstagramData();
+
+
   document.getElementById('change-pw-btn').addEventListener('click', async () => {
     const cur    = document.getElementById('settings-current-pw').value;
     const nw     = document.getElementById('settings-new-pw').value;
