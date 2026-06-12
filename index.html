@@ -1517,7 +1517,7 @@ body.cursor-click #cursor-dot {
     <div class="ig-profile ig-profile-card reveal reveal-delay-1">
       <div class="ig-avatar-wrap">
         <div class="ig-avatar" id="ig-avatar-el">
-          <img src="https://via.placeholder.com/150" alt="Profile" id="ig-avatar-img" style="display:none;">
+          <img src="" alt="Profile" id="ig-avatar-img" data-cms="ig_profile_pic" style="width:100%;height:100%;object-fit:cover;">
         </div>
         <div class="ig-badge">
           <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#070605" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1532,16 +1532,16 @@ body.cursor-click #cursor-dot {
           <span class="ig-full-name" id="ig-full-name">Grid Crea Studio</span>
           <span class="ig-handle" id="ig-handle">@gridcreastudio</span>
         </div>
-        <p class="ig-bio" id="ig-bio">Interior Architecture &amp; Design Studio<br>Crafting spaces that breathe luxury.</p>
+        <p class="ig-bio" id="ig-bio" data-cms="ig_bio">Interior Architecture &amp; Design Studio<br>Crafting spaces that breathe luxury.</p>
       </div>
       <div class="ig-stats-panel">
         <div class="ig-stat">
-          <div class="ig-stat-num" id="ig-followers">12.4K</div>
+          <div class="ig-stat-num" id="ig-followers" data-cms="ig_followers">12.4K</div>
           <div class="ig-stat-label">Followers</div>
         </div>
         <div class="ig-stat-divider"></div>
         <div class="ig-stat">
-          <div class="ig-stat-num" id="ig-following">312</div>
+          <div class="ig-stat-num" id="ig-following" data-cms="ig_following">312</div>
           <div class="ig-stat-label">Following</div>
         </div>
       </div>
@@ -1559,14 +1559,14 @@ body.cursor-click #cursor-dot {
 
 <script>
 (function() {
-  // Instagram Profile Data - easily editable
+  // Instagram Profile Data - now editable via CMS
   var IG_PROFILE = {
     username: 'gridcreastudio',
     full_name: 'Grid Crea Studio',
     biography: 'Interior Architecture & Design Studio\nCrafting spaces that breathe luxury.',
     followers_count: '12.4K',
     following_count: '312',
-    profile_picture_url: null, // Add image URL here when ready
+    profile_picture_url: null,
     instagram_url: 'https://www.instagram.com/gridcreastudio'
   };
 
@@ -1576,20 +1576,23 @@ body.cursor-click #cursor-dot {
   var bioEl = document.getElementById('ig-bio');
   var followersEl = document.getElementById('ig-followers');
   var followingEl = document.getElementById('ig-following');
-  var avatarEl = document.getElementById('ig-avatar-el');
   var avatarImg = document.getElementById('ig-avatar-img');
 
   if (fullNameEl) fullNameEl.textContent = IG_PROFILE.full_name;
   if (handleEl) handleEl.textContent = '@' + IG_PROFILE.username;
-  if (bioEl) bioEl.textContent = IG_PROFILE.biography;
-  if (followersEl) followersEl.textContent = IG_PROFILE.followers_count;
-  if (followingEl) followingEl.textContent = IG_PROFILE.following_count;
+  if (bioEl && !bioEl.getAttribute('data-cms-loaded')) {
+    bioEl.textContent = IG_PROFILE.biography;
+  }
+  if (followersEl && !followersEl.getAttribute('data-cms-loaded')) {
+    followersEl.textContent = IG_PROFILE.followers_count;
+  }
+  if (followingEl && !followingEl.getAttribute('data-cms-loaded')) {
+    followingEl.textContent = IG_PROFILE.following_count;
+  }
 
   // Handle profile picture if available
-  if (IG_PROFILE.profile_picture_url) {
+  if (IG_PROFILE.profile_picture_url && avatarImg) {
     avatarImg.src = IG_PROFILE.profile_picture_url;
-    avatarImg.style.display = 'block';
-    if (avatarEl) avatarEl.textContent = '';
   }
 })();
 </script>
