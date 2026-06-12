@@ -1505,13 +1505,7 @@ body.cursor-click #cursor-dot {
 </section>
 
 <!-- ═══════════════════════════════════════
-     INSTAGRAM SHOWCASE
-     To connect real data: replace MOCK_POSTS & MOCK_PROFILE
-     with fetch() calls to Instagram Basic Display API
-     GET https://graph.instagram.com/me?fields=id,username,biography,
-         profile_picture_url,followers_count&access_token=YOUR_TOKEN
-     GET https://graph.instagram.com/me/media?fields=id,media_type,
-         media_url,timestamp,like_count,comments_count,caption&access_token=YOUR_TOKEN
+     INSTAGRAM PROFILE CARD
 ═══════════════════════════════════════ -->
 <section id="instagram-showcase">
   <div class="ig-glow ig-glow-a"></div>
@@ -1519,16 +1513,12 @@ body.cursor-click #cursor-dot {
 
   <div class="ig-inner">
 
-    <!-- Header -->
-    <div class="ig-header reveal">
-      <span class="ig-eyebrow">Follow Along</span>
-      <h2 class="ig-title">Design Stories, <em>Curated Daily</em></h2>
-    </div>
-
-    <!-- Profile -->
-    <div class="ig-profile reveal reveal-delay-1">
+    <!-- Profile Card -->
+    <div class="ig-profile ig-profile-card reveal reveal-delay-1">
       <div class="ig-avatar-wrap">
-        <div class="ig-avatar" id="ig-avatar-el">GC</div>
+        <div class="ig-avatar" id="ig-avatar-el">
+          <img src="https://via.placeholder.com/150" alt="Profile" id="ig-avatar-img" style="display:none;">
+        </div>
         <div class="ig-badge">
           <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#070605" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <rect x="2" y="2" width="20" height="20" rx="5"/>
@@ -1539,25 +1529,20 @@ body.cursor-click #cursor-dot {
       </div>
       <div style="flex:1;min-width:180px">
         <div class="ig-name-row">
-          <span class="ig-full-name">Grid Crea Studio</span>
-          <span class="ig-handle">@gridcreastudio</span>
+          <span class="ig-full-name" id="ig-full-name">Grid Crea Studio</span>
+          <span class="ig-handle" id="ig-handle">@gridcreastudio</span>
         </div>
-        <p class="ig-bio">Interior Architecture &amp; Design Studio&#10;Crafting spaces that breathe luxury.</p>
+        <p class="ig-bio" id="ig-bio">Interior Architecture &amp; Design Studio<br>Crafting spaces that breathe luxury.</p>
       </div>
       <div class="ig-stats-panel">
         <div class="ig-stat">
-          <div class="ig-stat-num">12.4K</div>
+          <div class="ig-stat-num" id="ig-followers">12.4K</div>
           <div class="ig-stat-label">Followers</div>
         </div>
         <div class="ig-stat-divider"></div>
         <div class="ig-stat">
-          <div class="ig-stat-num">312</div>
+          <div class="ig-stat-num" id="ig-following">312</div>
           <div class="ig-stat-label">Following</div>
-        </div>
-        <div class="ig-stat-divider"></div>
-        <div class="ig-stat">
-          <div class="ig-stat-num">148</div>
-          <div class="ig-stat-label">Posts</div>
         </div>
       </div>
       <a href="https://www.instagram.com/gridcreastudio" target="_blank" rel="noopener" class="ig-follow-btn">
@@ -1569,231 +1554,43 @@ body.cursor-click #cursor-dot {
         Follow on Instagram
       </a>
     </div>
-
-    <!-- Post Grid -->
-    <div class="ig-grid" id="ig-grid"></div>
-
-    <!-- Footer CTA -->
-    <div class="ig-cta reveal">
-      <p class="ig-cta-label">More on our feed</p>
-      <a href="https://www.instagram.com/gridcreastudio" target="_blank" rel="noopener" class="ig-outline-btn">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="2" y="2" width="20" height="20" rx="5"/>
-          <circle cx="12" cy="12" r="4"/>
-          <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/>
-        </svg>
-        @gridcreastudio
-      </a>
-    </div>
   </div>
 </section>
 
-<!-- Lightbox -->
-<div id="ig-lightbox" onclick="igCloseOnBackdrop(event)">
-  <div class="ig-modal" id="ig-modal">
-    <div class="ig-modal-img" id="ig-modal-img">
-      <button class="ig-nav-btn ig-nav-prev" id="ig-prev" onclick="igNav(-1)">&#8249;</button>
-      <button class="ig-nav-btn ig-nav-next" id="ig-next" onclick="igNav(1)">&#8250;</button>
-    </div>
-    <div class="ig-modal-info">
-      <div class="ig-modal-user">
-        <div class="ig-modal-avatar">GC</div>
-        <div>
-          <div class="ig-modal-uname">gridcreastudio</div>
-          <div class="ig-modal-date" id="ig-modal-date"></div>
-        </div>
-        <button class="ig-modal-close" onclick="igClose()">&#215;</button>
-      </div>
-      <div class="ig-modal-divider"></div>
-      <p class="ig-modal-caption" id="ig-modal-caption"></p>
-      <div class="ig-modal-divider"></div>
-      <div class="ig-modal-stats">
-        <div class="ig-modal-stat">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="#C9A84C" stroke="none"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-          <span id="ig-modal-likes"></span>
-        </div>
-        <div class="ig-modal-stat">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="#C9A84C" stroke="none"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-          <span id="ig-modal-comments"></span>
-        </div>
-      </div>
-      <a href="https://www.instagram.com/gridcreastudio" target="_blank" rel="noopener" class="ig-modal-link">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-          <polyline points="15 3 21 3 21 9"/>
-          <line x1="10" y1="14" x2="21" y2="3"/>
-        </svg>
-        View on Instagram
-      </a>
-    </div>
-  </div>
-</div>
-
 <script>
 (function() {
-  /* ── MOCK DATA — replace with real Instagram API responses ── */
+  // Instagram Profile Data - easily editable
   var IG_PROFILE = {
     username: 'gridcreastudio',
     full_name: 'Grid Crea Studio',
     biography: 'Interior Architecture & Design Studio\nCrafting spaces that breathe luxury.',
     followers_count: '12.4K',
-    following_count: 312,
-    posts_count: 148,
-    profile_picture_url: null,
+    following_count: '312',
+    profile_picture_url: null, // Add image URL here when ready
     instagram_url: 'https://www.instagram.com/gridcreastudio'
   };
 
-  var ACCENTS = [
-    ['#1A1612','#2A2218'],['#12181A','#182228'],['#1A1218','#221828'],
-    ['#181A12','#222812'],['#1A1614','#2C211C'],['#141418','#1E1E26'],
-    ['#18161A','#26222A'],['#1A1816','#28231E'],['#141A18','#1E2826']
-  ];
+  // Update profile card with data
+  var fullNameEl = document.getElementById('ig-full-name');
+  var handleEl = document.getElementById('ig-handle');
+  var bioEl = document.getElementById('ig-bio');
+  var followersEl = document.getElementById('ig-followers');
+  var followingEl = document.getElementById('ig-following');
+  var avatarEl = document.getElementById('ig-avatar-el');
+  var avatarImg = document.getElementById('ig-avatar-img');
 
-  var CAPTIONS = [
-    'Redefining spatial boundaries through materiality and light. ✦',
-    'Where raw concrete meets warm timber — a study in contrast.',
-    'Luminous interiors, crafted for those who live intentionally.',
-    'The art of restraint. Less detail, more presence.',
-    'Editorial space design for a private residence in Bangalore.',
-    'When the brief says "minimal" but the soul says "opulent".',
-    'Letting light be the architect. Study in Bangalore, 2024.',
-    'Texture is the silent language of a room.',
-    'Bespoke millwork as sculpture. Craft-forward living.'
-  ];
+  if (fullNameEl) fullNameEl.textContent = IG_PROFILE.full_name;
+  if (handleEl) handleEl.textContent = '@' + IG_PROFILE.username;
+  if (bioEl) bioEl.textContent = IG_PROFILE.biography;
+  if (followersEl) followersEl.textContent = IG_PROFILE.followers_count;
+  if (followingEl) followingEl.textContent = IG_PROFILE.following_count;
 
-  var IG_POSTS = Array.from({length: 9}, function(_, i) {
-    return {
-      id: i,
-      media_url: null,
-      caption: CAPTIONS[i],
-      like_count: Math.floor(Math.random() * 700 + 180),
-      comments_count: Math.floor(Math.random() * 55 + 8),
-      timestamp: new Date(Date.now() - i * 5 * 86400000).toISOString(),
-      accent: ACCENTS[i]
-    };
-  });
-  /* ─────────────────────────────────────────────────────────── */
-
-  var currentIdx = 0;
-
-  /* Build grid */
-  var grid = document.getElementById('ig-grid');
-  IG_POSTS.forEach(function(post, i) {
-    var delay = (i % 3) * 70 + Math.floor(i / 3) * 110;
-    var card = document.createElement('div');
-    card.className = 'ig-post';
-    card.style.transitionDelay = delay + 'ms';
-    card.innerHTML =
-      '<div class="ig-skel"></div>' +
-      '<div class="ig-post-bg" style="background:radial-gradient(ellipse at 32% 36%,' + post.accent[1] + ' 0%,' + post.accent[0] + ' 68%);">' +
-        '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(201,168,76,0.18)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">' +
-          '<rect x="2" y="2" width="20" height="20" rx="5"/>' +
-          '<circle cx="12" cy="12" r="4"/>' +
-          '<circle cx="17.5" cy="6.5" r="1.5" fill="rgba(201,168,76,0.18)" stroke="none"/>' +
-        '</svg>' +
-      '</div>' +
-      '<div class="ig-overlay">' +
-        '<div class="ig-overlay-stat">' +
-          '<svg width="17" height="17" viewBox="0 0 24 24" fill="#fff" stroke="none"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>' +
-          post.like_count +
-        '</div>' +
-        '<div class="ig-overlay-stat">' +
-          '<svg width="17" height="17" viewBox="0 0 24 24" fill="#fff" stroke="none"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>' +
-          post.comments_count +
-        '</div>' +
-      '</div>' +
-      '<div class="ig-post-bar"></div>';
-
-    /* If real image available */
-    if (post.media_url) {
-      var img = document.createElement('img');
-      img.src = post.media_url;
-      img.alt = post.caption;
-      img.loading = 'lazy';
-      img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;';
-      img.onload = function() {
-        var skel = card.querySelector('.ig-skel');
-        if (skel) skel.remove();
-      };
-      card.insertBefore(img, card.querySelector('.ig-overlay'));
-    } else {
-      /* Remove shimmer immediately for placeholder */
-      setTimeout(function() {
-        var skel = card.querySelector('.ig-skel');
-        if (skel) skel.style.display = 'none';
-      }, 400);
-    }
-
-    card.addEventListener('click', function() { igOpen(i); });
-    grid.appendChild(card);
-  });
-
-  /* Scroll reveal for posts */
-  var obs = new IntersectionObserver(function(entries) {
-    entries.forEach(function(e) {
-      if (e.isIntersecting) {
-        e.target.classList.add('ig-visible');
-        obs.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.05 });
-  grid.querySelectorAll('.ig-post').forEach(function(c) { obs.observe(c); });
-
-  /* Lightbox */
-  window.igOpen = function(idx) {
-    currentIdx = idx;
-    var post = IG_POSTS[idx];
-    var imgPane = document.getElementById('ig-modal-img');
-
-    /* Clear old bg */
-    var oldBg = imgPane.querySelector('.ig-modal-bg');
-    if (oldBg) oldBg.remove();
-    var oldImg = imgPane.querySelector('img');
-    if (oldImg) oldImg.remove();
-
-    if (post.media_url) {
-      var img = document.createElement('img');
-      img.src = post.media_url;
-      img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;';
-      imgPane.insertBefore(img, imgPane.querySelector('.ig-nav-btn'));
-    } else {
-      var bg = document.createElement('div');
-      bg.className = 'ig-modal-bg';
-      bg.style.cssText = 'width:100%;height:100%;min-height:300px;background:radial-gradient(ellipse at 35% 35%,' + post.accent[1] + ' 0%,' + post.accent[0] + ' 70%);display:flex;align-items:center;justify-content:center;';
-      bg.innerHTML = '<svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="rgba(201,168,76,0.2)" stroke-width="1.1"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.5" fill="rgba(201,168,76,0.2)" stroke="none"/></svg>';
-      imgPane.insertBefore(bg, imgPane.querySelector('.ig-nav-btn'));
-    }
-
-    document.getElementById('ig-modal-caption').textContent = post.caption;
-    document.getElementById('ig-modal-likes').textContent = post.like_count + ' likes';
-    document.getElementById('ig-modal-comments').textContent = post.comments_count + ' comments';
-    document.getElementById('ig-modal-date').textContent = new Date(post.timestamp).toLocaleDateString('en-IN', {day:'numeric', month:'short', year:'numeric'});
-    document.getElementById('ig-prev').style.display = idx > 0 ? 'flex' : 'none';
-    document.getElementById('ig-next').style.display = idx < IG_POSTS.length - 1 ? 'flex' : 'none';
-    document.getElementById('ig-lightbox').classList.add('ig-open');
-    document.body.style.overflow = 'hidden';
-  };
-
-  window.igClose = function() {
-    document.getElementById('ig-lightbox').classList.remove('ig-open');
-    document.body.style.overflow = '';
-  };
-
-  window.igCloseOnBackdrop = function(e) {
-    if (e.target === document.getElementById('ig-lightbox')) igClose();
-  };
-
-  window.igNav = function(dir) {
-    var n = currentIdx + dir;
-    if (n >= 0 && n < IG_POSTS.length) igOpen(n);
-  };
-
-  document.addEventListener('keydown', function(e) {
-    if (!document.getElementById('ig-lightbox').classList.contains('ig-open')) return;
-    if (e.key === 'Escape') igClose();
-    if (e.key === 'ArrowLeft') igNav(-1);
-    if (e.key === 'ArrowRight') igNav(1);
-  });
+  // Handle profile picture if available
+  if (IG_PROFILE.profile_picture_url) {
+    avatarImg.src = IG_PROFILE.profile_picture_url;
+    avatarImg.style.display = 'block';
+    if (avatarEl) avatarEl.textContent = '';
+  }
 })();
 </script>
 
