@@ -1924,9 +1924,20 @@ body.cursor-click #cursor-dot {
             </div>
 
             <p class="cms-group-title">Profile Overrides <span style="font-size:0.68rem;color:var(--stone);font-family:'Jost',sans-serif;font-weight:400;letter-spacing:0.06em;">(optional — leave blank to use live values)</span></p>
+            
+            <div class="cms-img-field">
+              <label>Profile Picture</label>
+              <div class="cms-img-preview" id="preview-ig-profile-pic">
+                <div class="upload-hint"><span class="upload-icon">↑</span><span>Click to upload profile pic</span></div>
+                <input type="file" accept="image/*" data-img-key="ig_profile_pic">
+              </div>
+              <button class="cms-img-remove" data-remove="ig_profile_pic">Remove image</button>
+            </div>
+            
             <div class="cms-field"><label>Display Name Override</label><input type="text" id="ig-override-name" placeholder="e.g. Grid Crea Studio"></div>
             <div class="cms-field"><label>Bio Override</label><textarea id="ig-override-bio" style="min-height:60px;" placeholder="e.g. Interior Architecture &amp; Design Studio"></textarea></div>
             <div class="cms-field"><label>Followers Display Override</label><input type="text" id="ig-override-followers" placeholder="e.g. 12.4K"></div>
+            <div class="cms-field"><label>Following Display Override</label><input type="text" id="ig-override-following" placeholder="e.g. 312"></div>
 
             <button id="ig-apply-overrides-btn" style="width:100%;background:transparent;border:0.5px solid var(--gold);padding:0.7rem 1.4rem;font-family:'Jost',sans-serif;font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);cursor:pointer;transition:all 0.2s;margin-bottom:1.5rem;">
               Apply Overrides &amp; Save
