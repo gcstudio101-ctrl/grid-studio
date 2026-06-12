@@ -2243,6 +2243,26 @@ function renderImageOnly(key, src) {
     hero_small2: () => setImg('hero-img-small2', src),
     about_main:  () => setImg('about-main-img',  src),
     about_accent:() => setImg('about-accent-img',src),
+    ig_profile_pic: () => {
+      const s = src ? (src.startsWith('data:') ? src : 'data:image/png;base64,' + src) : '';
+      const avatarImg = document.getElementById('ig-avatar-img');
+      if (avatarImg) {
+        avatarImg.src = s;
+        avatarImg.style.display = 'block';
+        const avatarEl = document.getElementById('ig-avatar-el');
+        if (avatarEl) {
+          const existingImg = avatarEl.querySelector('img');
+          if (existingImg) existingImg.remove();
+          if (s) {
+            const img = document.createElement('img');
+            img.src = s;
+            img.style.cssText = 'width:100%;height:100%;object-fit:cover;';
+            avatarEl.appendChild(img);
+            avatarEl.textContent = '';
+          }
+        }
+      }
+    },
   };
   if (siteImgMap[key]) siteImgMap[key]();
 }
@@ -2618,8 +2638,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Smooth scroll
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', e => {
-      const t = document.querySelector(a.getAttribute('href'));
-      if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
+      const href = a.getAttribute('href');
+      if (href && href !== '#') {  // Check if href is valid and not just "#"
+        const t = document.querySelector(href);
+        if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
+      }
     });
   });
 
@@ -2685,266 +2708,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
     });
   }
-  // ═══════════════════════════════
-  // INSTAGRAM CMS TAB LOGIC
-  // ═══════════════════════════════
-  (function() {
-    const IG_TOKEN_KEY = 'gcs:ig_token';
-    const IG_DATA_KEY  = 'gcs:ig_data';
-    const IG_OVER_KEY  = 'gcs:ig_overrides';
-
-    function igStore(key, val) {
-      try { localStorage.setItem(key, typeof val === 'string' ? val : JSON.stringify(val)); } catch(e) {}
-    }
-    function igRead(key) {
-      try { return localStorage.getItem(key); } catch(e) { return null; }
-    }
-
-    function igStatus(msg, type) {
-      const el = document.getElementById('ig-cms-status');
-      if (!el) return;
-      el.style.display = 'block';
-      el.textContent = msg;
-      if (type === 'ok') {
-        el.style.background = 'rgba(62,207,142,0.08)';
-        el.style.borderColor = 'rgba(62,207,142,0.3)';
-        el.style.color = '#3ecf8e';
-      } else if (type === 'err') {
-        el.style.background = 'rgba(220,70,70,0.08)';
-        el.style.borderColor = 'rgba(220,70,70,0.3)';
-        el.style.color = '#e07070';
-      } else {
-        el.style.background = 'rgba(201,168,76,0.08)';
-        el.style.borderColor = 'rgba(201,168,76,0.2)';
-        el.style.color = '#C9A84C';
-      }
-    }
-
-    function igRenderPreview(profile, posts, overrides) {
-      overrides = overrides || {};
-      document.getElementById('ig-cms-empty').style.display = 'none';
-      document.getElementById('ig-cms-preview').style.display = 'block';
-      document.getElementById('ig-disconnect-btn').style.display = 'block';
-
-      // Avatar
-      const avatarEl = document.getElementById('ig-cms-avatar');
-      if (profile.profile_picture_url) {
-        avatarEl.innerHTML = '<img src="' + profile.profile_picture_url + '" style="width:100%;height:100%;object-fit:cover;">';
-      } else {
-        avatarEl.textContent = (profile.username || 'GC').slice(0,2).toUpperCase();
-      }
-
-      document.getElementById('ig-cms-uname').textContent = '@' + (profile.username || '');
-      document.getElementById('ig-cms-followers').textContent =
-        (overrides.followers || profile.followers_count || '—') + ' followers';
-
-      // Load overrides into fields
-      document.getElementById('ig-override-name').value = overrides.name || '';
-      document.getElementById('ig-override-bio').value  = overrides.bio  || '';
-      document.getElementById('ig-override-followers').value = overrides.followers || '';
-      document.getElementById('ig-override-following').value = overrides.following || '';
-
-      // Post mini-grid
-      const grid = document.getElementById('ig-cms-post-grid');
-      document.getElementById('ig-post-count').textContent = '(' + posts.length + ' posts)';
-      const ACCENTS = [['#1A1612','#2A2218'],['#12181A','#182228'],['#1A1218','#221828'],
-        ['#181A12','#222812'],['#1A1614','#2C211C'],['#141418','#1E1E26'],
-        ['#18161A','#26222A'],['#1A1816','#28231E'],['#141A18','#1E2826']];
-      grid.innerHTML = posts.slice(0,9).map(function(p, i) {
-        var ac = ACCENTS[i % ACCENTS.length];
-        var bg = p.media_url
-          ? 'url(' + p.media_url + ') center/cover'
-          : 'radial-gradient(ellipse at 35% 35%,' + ac[1] + ' 0%,' + ac[0] + ' 70%)';
-        return '<div style="aspect-ratio:1;background:' + bg + ';position:relative;">' +
-          '<div style="position:absolute;bottom:0;left:0;right:0;padding:3px 4px;background:rgba(0,0,0,0.55);font-family:\'Jost\',sans-serif;font-size:9px;color:#C9A84C;letter-spacing:0.06em;">♥ ' + (p.like_count || 0) + '</div>' +
-          '</div>';
-      }).join('');
-    }
-
-    function igApplyToSite(profile, posts, overrides) {
-      overrides = overrides || {};
-      // Update ig-avatar on showcase section
-      var av = document.getElementById('ig-avatar-el');
-      if (av) {
-        if (profile.profile_picture_url) {
-          av.innerHTML = '<img src="' + profile.profile_picture_url + '" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">';
-        } else {
-          av.textContent = (profile.username || 'GC').slice(0,2).toUpperCase();
-        }
-      }
-      // Update full name
-      var fn = document.querySelector('.ig-full-name');
-      if (fn) fn.textContent = overrides.name || profile.name || 'Grid Crea Studio';
-      // Update handle
-      var hd = document.querySelector('.ig-handle');
-      if (hd) hd.textContent = '@' + (profile.username || 'gridcreastudio');
-      // Update bio
-      var bio = document.querySelector('.ig-bio');
-      if (bio) bio.textContent = overrides.bio || profile.biography || '';
-      // Update stats
-      var stats = document.querySelectorAll('.ig-stat-num');
-      if (stats[0]) stats[0].textContent = overrides.followers || profile.followers_count || '—';
-      if (stats[1]) stats[1].textContent = overrides.following || profile.following_count || '—';
-      if (stats[2]) stats[2].textContent = profile.posts_count || '—';
-
-      // Rebuild post grid with real images
-      var grid = document.getElementById('ig-grid');
-      if (!grid || !posts.length) return;
-      grid.innerHTML = '';
-      var ACCENTS = [['#1A1612','#2A2218'],['#12181A','#182228'],['#1A1218','#221828'],
-        ['#181A12','#222812'],['#1A1614','#2C211C'],['#141418','#1E1E26'],
-        ['#18161A','#26222A'],['#1A1816','#28231E'],['#141A18','#1E2826']];
-
-      posts.slice(0,9).forEach(function(post, i) {
-        var delay = (i % 3) * 70 + Math.floor(i / 3) * 110;
-        var ac = ACCENTS[i % ACCENTS.length];
-        var card = document.createElement('div');
-        card.className = 'ig-post';
-        card.style.transitionDelay = delay + 'ms';
-        var imgHtml = post.media_url
-          ? '<img src="' + post.media_url + '" alt="" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">'
-          : '<div class="ig-post-bg" style="position:absolute;inset:0;background:radial-gradient(ellipse at 32% 36%,' + ac[1] + ' 0%,' + ac[0] + ' 68%);"></div>';
-        card.innerHTML = imgHtml +
-          '<div class="ig-overlay">' +
-            '<div class="ig-overlay-stat"><svg width="17" height="17" viewBox="0 0 24 24" fill="#fff" stroke="none"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>' + (post.like_count || 0) + '</div>' +
-            '<div class="ig-overlay-stat"><svg width="17" height="17" viewBox="0 0 24 24" fill="#fff" stroke="none"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>' + (post.comments_count || 0) + '</div>' +
-          '</div>' +
-          '<div class="ig-post-bar"></div>';
-        var captionText = post.caption || '';
-        var timestampStr = post.timestamp || new Date().toISOString();
-        card.addEventListener('click', (function(p, idx) {
-          return function() {
-            window.igOpen && window.igOpen(idx);
-          };
-        })(post, i));
-        grid.appendChild(card);
-        // Re-map window.igOpen posts
-      });
-
-      // Patch the lightbox data with real posts
-      window._igRealPosts = posts.slice(0,9);
-
-      // Re-observe for scroll reveal
-      if (window._observeRevealElements) window._observeRevealElements();
-      var obs2 = new IntersectionObserver(function(entries) {
-        entries.forEach(function(e) {
-          if (e.isIntersecting) { e.target.classList.add('ig-visible'); obs2.unobserve(e.target); }
-        });
-      }, { threshold: 0.05 });
-      grid.querySelectorAll('.ig-post').forEach(function(c) { obs2.observe(c); });
-    }
-
-    async function igFetch(token) {
-      igStatus('Connecting to Instagram…', 'info');
-      // Fetch profile
-      var profileRes = await fetch(
-        'https://graph.instagram.com/me?fields=id,username,name,biography,profile_picture_url,followers_count,following_count,media_count&access_token=' + token
-      );
-      if (!profileRes.ok) {
-        var err = await profileRes.json().catch(function(){return {};});
-        throw new Error(err.error && err.error.message ? err.error.message : 'Invalid token or API error');
-      }
-      var profile = await profileRes.json();
-      profile.posts_count = profile.media_count;
-
-      igStatus('Fetching posts…', 'info');
-      // Fetch posts
-      var postsRes = await fetch(
-        'https://graph.instagram.com/me/media?fields=id,media_type,media_url,thumbnail_url,timestamp,like_count,comments_count,caption&limit=9&access_token=' + token
-      );
-      var postsData = await postsRes.json();
-      var posts = (postsData.data || []).filter(function(p) {
-        return p.media_type === 'IMAGE' || p.media_type === 'CAROUSEL_ALBUM';
-      });
-
-      return { profile: profile, posts: posts };
-    }
-
-    // Init — load any saved state
-    function igInit() {
-      var savedToken = igRead(IG_TOKEN_KEY);
-      var savedData  = igRead(IG_DATA_KEY);
-      var savedOver  = igRead(IG_OVER_KEY);
-
-      if (savedToken) {
-        document.getElementById('ig-token-input').value = savedToken;
-      }
-      if (savedData) {
-        try {
-          var d = JSON.parse(savedData);
-          var ov = savedOver ? JSON.parse(savedOver) : {};
-          igRenderPreview(d.profile, d.posts, ov);
-          igApplyToSite(d.profile, d.posts, ov);
-          igStatus('Connected — showing saved data. Click "Connect & Fetch Posts" to refresh.', 'ok');
-        } catch(e) {}
-      }
-    }
-
-    // Connect button
-    var connectBtn = document.getElementById('ig-connect-btn');
-    if (connectBtn) {
-      connectBtn.addEventListener('click', async function() {
-        var token = (document.getElementById('ig-token-input').value || '').trim();
-        if (!token) { igStatus('Please paste your access token first.', 'err'); return; }
-        connectBtn.textContent = 'Connecting…';
-        connectBtn.disabled = true;
-        try {
-          var result = await igFetch(token);
-          igStore(IG_TOKEN_KEY, token);
-          igStore(IG_DATA_KEY, result);
-          var ov = igRead(IG_OVER_KEY) ? JSON.parse(igRead(IG_OVER_KEY)) : {};
-          igRenderPreview(result.profile, result.posts, ov);
-          igApplyToSite(result.profile, result.posts, ov);
-          igStatus('✓ Connected as @' + result.profile.username + ' — ' + result.posts.length + ' posts loaded.', 'ok');
-        } catch(e) {
-          igStatus('Connection failed: ' + e.message, 'err');
-        }
-        connectBtn.textContent = 'Connect & Fetch Posts';
-        connectBtn.disabled = false;
-      });
-    }
-
-    // Disconnect button
-    var disconnectBtn = document.getElementById('ig-disconnect-btn');
-    if (disconnectBtn) {
-      disconnectBtn.addEventListener('click', function() {
-        if (!confirm('Disconnect Instagram? The section will revert to placeholder content.')) return;
-        try { localStorage.removeItem(IG_TOKEN_KEY); localStorage.removeItem(IG_DATA_KEY); localStorage.removeItem(IG_OVER_KEY); } catch(e) {}
-        document.getElementById('ig-token-input').value = '';
-        document.getElementById('ig-cms-preview').style.display = 'none';
-        document.getElementById('ig-cms-empty').style.display = 'block';
-        document.getElementById('ig-disconnect-btn').style.display = 'none';
-        igStatus('Disconnected. The section now shows placeholder content.', 'info');
-      });
-    }
-
-    // Apply overrides button
-    var overBtn = document.getElementById('ig-apply-overrides-btn');
-    if (overBtn) {
-      overBtn.addEventListener('click', function() {
-        var savedData = igRead(IG_DATA_KEY);
-        if (!savedData) { igStatus('Connect Instagram first.', 'err'); return; }
-        var d = JSON.parse(savedData);
-        var ov = {
-          name:      document.getElementById('ig-override-name').value.trim(),
-          bio:       document.getElementById('ig-override-bio').value.trim(),
-          followers: document.getElementById('ig-override-followers').value.trim(),
-          following: document.getElementById('ig-override-following').value.trim()
-        };
-        igStore(IG_OVER_KEY, ov);
-        igApplyToSite(d.profile, d.posts, ov);
-        document.getElementById('ig-cms-followers').textContent = (ov.followers || d.profile.followers_count || '—') + ' followers';
-        igStatus('✓ Overrides saved and applied.', 'ok');
-      });
-    }
-
-    // Run on tab switch (lazy init)
-    document.addEventListener('click', function(e) {
-      if (e.target && e.target.dataset && e.target.dataset.tab === 'instagram') {
-        igInit();
-      }
-    });
-  })();
 
 });
 </script>
