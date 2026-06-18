@@ -2661,7 +2661,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       // Replace DEFAULTS in the source with current data
       html = html.replace(
-        /const DEFAULTS = \{[\s\S]*?\};\s*\n\/\/ ═+\s*\n\/\/ STATE/,
+        /const DEFAULTS = \{[\s\S]*?\};\s*\n(?:const EXPORTED = true;[^\n]*\n)?\/\/ ═+\s*\n\/\/ STATE/,
         'const DEFAULTS = ' + serialized + ';\nconst EXPORTED = true; // skip stale localStorage\n// ═══════════════════════════════\n// STATE'
       );
 
