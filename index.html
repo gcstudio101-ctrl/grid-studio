@@ -1889,7 +1889,7 @@ body.cursor-click #cursor-dot {
           
           <div class="cms-img-field">
             <label>Profile Picture</label>
-            <div class="cms-img-preview" id="preview-ig-profile-pic">
+            <div class="cms-img-preview" id="preview-ig_profile_pic">
               <div class="upload-hint"><span class="upload-icon">↑</span><span>Click to upload profile pic</span></div>
               <input type="file" accept="image/*" data-img-key="ig_profile_pic">
             </div>
@@ -2197,7 +2197,7 @@ function buildCmsFields() {
   });
 
   // Populate image previews
-  ['logo','hero_main','hero_small1','hero_small2','about_main','about_accent'].forEach(key => {
+  ['logo','hero_main','hero_small1','hero_small2','about_main','about_accent','ig_profile_pic'].forEach(key => {
     updateCmsPreview(key, data[key]);
   });
 }
@@ -2246,22 +2246,7 @@ function renderImageOnly(key, src) {
     ig_profile_pic: () => {
       const s = src ? (src.startsWith('data:') ? src : 'data:image/png;base64,' + src) : '';
       const avatarImg = document.getElementById('ig-avatar-img');
-      if (avatarImg) {
-        avatarImg.src = s;
-        avatarImg.style.display = 'block';
-        const avatarEl = document.getElementById('ig-avatar-el');
-        if (avatarEl) {
-          const existingImg = avatarEl.querySelector('img');
-          if (existingImg) existingImg.remove();
-          if (s) {
-            const img = document.createElement('img');
-            img.src = s;
-            img.style.cssText = 'width:100%;height:100%;object-fit:cover;';
-            avatarEl.appendChild(img);
-            avatarEl.textContent = '';
-          }
-        }
-      }
+      if (avatarImg) avatarImg.src = s;
     },
   };
   if (siteImgMap[key]) siteImgMap[key]();
